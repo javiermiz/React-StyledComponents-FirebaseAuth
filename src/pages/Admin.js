@@ -2,12 +2,12 @@ import React, { useState } from "react"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 
-export default function Admin() {
+const Admin = () => {
   const [error, setError] = useState("")
   const { currentUser, logout } = useAuth()
   const history = useHistory()
 
-  async function handleLogout() {
+  const handleLogout = async () => {
     setError("")
 
     try {
@@ -27,3 +27,5 @@ export default function Admin() {
     </>
   )
 }
+
+export default Admin

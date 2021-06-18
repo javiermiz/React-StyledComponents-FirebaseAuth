@@ -2,14 +2,14 @@ import React, { useRef, useState } from "react"
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
 
-export default function ForgotPassword() {
+const ForgotPassword = () => {
   const emailRef = useRef()
   const { resetPassword } = useAuth()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
@@ -41,3 +41,5 @@ export default function ForgotPassword() {
     </>
   )
 }
+
+export default ForgotPassword

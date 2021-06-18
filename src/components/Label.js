@@ -5,7 +5,7 @@ const StyledLabel = styled.label`
   font-size: 20px;
 `
 
-function Label({ children }) {
+const Label = ({ children }) => {
   return (
     <StyledLabel>{children}</StyledLabel>
   )

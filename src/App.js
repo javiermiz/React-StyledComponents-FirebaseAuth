@@ -10,7 +10,7 @@ import ForgotPassword from "./pages/ForgotPassword"
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { GlobalStyles } from "./GlobalStyles"
 
-function App() {
+const App = () => {
   return (
     <HelmetProvider>
       <Container>
