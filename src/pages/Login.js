@@ -18,7 +18,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     try {
-      loginAndRedirect();
+      loginProcess();
     } catch {
       setError("Failed to log in")
       setLoading(false)
@@ -33,7 +33,7 @@ const Login = () => {
     setFormValues({ ...formValues, [name]: value })
   }
 
-  const loginAndRedirect = async () => {
+  const loginProcess = async () => {
     setError("")
     setLoading(true)
     await login(formValues.email, formValues.password)

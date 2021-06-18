@@ -9,20 +9,24 @@ const ForgotPassword = () => {
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
     try {
-      setMessage("")
-      setError("")
-      setLoading(true)
-      await resetPassword(emailRef.current.value)
-      setMessage("Check your inbox for further instructions")
+      resetPasswordProcess()
     } catch {
       setError("Failed to reset password")
     }
 
     setLoading(false)
+  }
+
+  const resetPasswordProcess = async () => {
+    setMessage("")
+    setError("")
+    setLoading(true)
+    await resetPassword(emailRef.current.value)
+    setMessage("Check your inbox for further instructions")
   }
 
   return (
