@@ -8,6 +8,7 @@ import { Form } from "../components/atoms/Form"
 const Login = () => {
   const { login } = useAuth()
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
   const history = useHistory()
   const [formValues, setFormValues] = useState({
     email: "",
@@ -30,10 +31,13 @@ const Login = () => {
   const loginProcess = async () => {
     try {
       setError("")
+      setLoading(true)
       await login(formValues.email, formValues.password)
+      setLoading(false)
       history.push("/admin")
     } catch {
       setError("Failed to log in")
+      setLoading(false)
     }
   }
 
@@ -51,6 +55,7 @@ const Login = () => {
           Log In
         </button>
         {error && <span>{error}</span>}
+        {loading && <span>Loading login...</span>}
       </Form>
       <Link to="/forgot-password">Forgot Password?</Link>
     </>

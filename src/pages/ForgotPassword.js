@@ -11,35 +11,34 @@ const ForgotPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    try {
-      resetPasswordProcess()
-    } catch {
-      setError("Failed to reset password")
-    }
+    resetPasswordProcess()
 
     setLoading(false)
   }
 
   const resetPasswordProcess = async () => {
-    setMessage("")
-    setError("")
-    setLoading(true)
-    await resetPassword(emailRef.current.value)
-    setMessage("Check your inbox for further instructions")
+    try {
+      setMessage("")
+      setError("")
+      await resetPassword(emailRef.current.value)
+      setMessage("Check your inbox for further instructions")
+    } catch {
+      setError("Failed to reset password")
+    }
   }
 
   return (
     <>
       <h2>Password Reset</h2>
-      {error && <span variant="danger">{error}</span>}
-      {message && <span variant="success">{message}</span>}
       <form onSubmit={handleSubmit}>
         <label>Email</label>
         <input type="email" ref={emailRef} required />
         <button disabled={loading} type="submit">
           Reset Password
         </button>
+        {loading && <span>Loading password reset...</span>}
+        {error && <span>{error}</span>}
+        {message && <span>{message}</span>}
       </form>
       <Link to="/login">Login</Link>
     </>
