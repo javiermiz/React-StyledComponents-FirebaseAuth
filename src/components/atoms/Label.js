@@ -11,4 +11,4 @@ const Label = ({ children }) => {
   )
 }
 
-export default Label;
+export {Label};
