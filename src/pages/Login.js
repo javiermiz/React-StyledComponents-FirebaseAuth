@@ -8,7 +8,6 @@ import { Form } from "../components/atoms/Form"
 const Login = () => {
   const { login } = useAuth()
   const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
   const history = useHistory()
   const [formValues, setFormValues] = useState({
     email: "",
@@ -17,12 +16,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    try {
-      loginProcess();
-    } catch {
-      setError("Failed to log in")
-      setLoading(false)
-    }
+    loginProcess();
   }
 
   const handleInputChange = (event) => {
@@ -34,17 +28,18 @@ const Login = () => {
   }
 
   const loginProcess = async () => {
-    setError("")
-    setLoading(true)
-    await login(formValues.email, formValues.password)
-    history.push("/admin")
-    setLoading(false)
+    try {
+      setError("")
+      await login(formValues.email, formValues.password)
+      history.push("/admin")
+    } catch {
+      setError("Failed to log in")
+    }
   }
 
   return (
     <>
       <h2>Log In</h2>
-      {error && <span variant="danger">{error}</span>}
       <Form onSubmit={handleSubmit}>
         <Label bg={"#000"}>Email</Label>
         <Input name="email" type="email" required onChange={handleInputChange} />
@@ -52,9 +47,10 @@ const Login = () => {
         <Label>Password</Label>
         <Input name="password" type="password" required onChange={handleInputChange} />
 
-        <button disabled={loading} type="submit">
+        <button type="submit">
           Log In
         </button>
+        {error && <span>{error}</span>}
       </Form>
       <Link to="/forgot-password">Forgot Password?</Link>
     </>
