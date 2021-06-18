@@ -5,9 +5,9 @@ const StyledInput = styled.input`
   
 `
 
-const Input = ({type, required}) => {
+const Input = (props) => {
   return (
-    <input type={"text" || type} required={required} />
+    <StyledInput {...props} />
   )
 }
 

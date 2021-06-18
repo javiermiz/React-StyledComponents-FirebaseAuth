@@ -5,9 +5,9 @@ const StyledForm = styled.form`
 
 `
 
-const Form = ({onSubmit, children}) => {
+const Form = ({ children, ...props}) => {
   return(
-    <StyledForm onSubmit={onSubmit}>
+    <StyledForm {...props}>
       {children}
     </StyledForm>
   )
