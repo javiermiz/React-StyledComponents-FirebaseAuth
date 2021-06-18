@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 const Admin = () => {
   const [error, setError] = useState("")
@@ -8,22 +8,23 @@ const Admin = () => {
   const history = useHistory()
 
   const handleLogout = async () => {
-    setError("")
-
     try {
+      setError("")
       await logout()
       history.push("/login")
     } catch {
       setError("Failed to log out")
     }
   }
-
+  
   return (
     <>
-      <h1>Aqui se edita el sitio</h1>
+      <h2>Welcome {currentUser.email}</h2>
+      <h1>Here is your Admin Panel</h1>
       <button onClick={handleLogout}>
         Log Out
       </button>
+      {error && <span>{error}</span>}
     </>
   )
 }
