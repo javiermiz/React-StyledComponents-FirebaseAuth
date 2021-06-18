@@ -2,8 +2,6 @@ import { createGlobalStyle } from "styled-components"
 import { Colors, Fonts } from "./Theme"
 
 const GlobalStyles = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&display=swap');
-
   *, *::before, *::after {
     box-sizing: border-box;
   }
