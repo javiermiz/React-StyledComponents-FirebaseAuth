@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useAuth } from "../contexts/AuthContext"
-import { useHistory } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 
 const Admin = () => {
   const [error, setError] = useState("")
@@ -24,6 +24,7 @@ const Admin = () => {
       <button onClick={handleLogout}>
         Log Out
       </button>
+      <Link to="/update-profile">Update profile</Link>
       {error && <span>{error}</span>}
     </>
   )
