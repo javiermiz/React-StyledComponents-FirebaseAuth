@@ -1,23 +1,23 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import { Label } from "../components/atoms/Label"
 import { Input } from "../components/atoms/Input"
 import { Form } from "../components/atoms/Form"
-
-const Login = () => {
-  const { login } = useAuth()
+const Signup = () => {
+  const { signup } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
+    passwordConfirm: "",
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    loginProcess();
+    signUpProcess()
   }
 
   const handleInputChange = (event) => {
@@ -28,39 +28,46 @@ const Login = () => {
     setFormValues({ ...formValues, [name]: value })
   }
 
-  const loginProcess = async () => {
+  const signUpProcess = async () => {
+    if (formValues.password !== formValues.passwordConfirm) {
+      return setError("Passwords do not match")
+    }
+
     try {
       setError("")
       setLoading(true)
-      await login(formValues.email, formValues.password)
+      await signup(formValues.email, formValues.password)
       setLoading(false)
-      history.push("/admin")
+      history.push("/")
     } catch {
-      setError("Failed to log in")
-      setLoading(false)
+      setError("Failed to create an account")
     }
   }
 
   return (
     <>
-      <h2>Log In</h2>
+      <h2>Sign Up</h2>
       <Form onSubmit={handleSubmit}>
-        <Label bg={"#000"}>Email</Label>
+        <Label>Email</Label>
         <Input name="email" type="email" required onChange={handleInputChange} />
 
         <Label>Password</Label>
         <Input name="password" type="password" required onChange={handleInputChange} />
 
-        <button type="submit">
-          Log In
+        <Label>Password Confirmation</Label>
+        <Input name="passwordConfirm" type="password" required onChange={handleInputChange} />
+
+        <button disabled={loading} type="submit">
+          Sign Up
         </button>
         {error && <span>{error}</span>}
-        {loading && <span>Loading login...</span>}
+        {loading && <span>Loading...</span>}
       </Form>
-      <Link to="/forgot-password">Forgot Password?</Link>
-      <Link to="/signup">Sign up</Link>
+      <div>
+        Already have an account? <Link to="/login">Log In</Link>
+      </div>
     </>
   )
 }
 
-export default Login
+export default Signup

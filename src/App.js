@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Home from "./pages/Home"
 import Admin from "./pages/Admin"
 import Login from "./pages/Login"
+import Signup from "./pages/Signup"
 import PrivateRoute from "./components/PrivateRoute"
 import ForgotPassword from "./pages/ForgotPassword"
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -26,6 +27,7 @@ const App = () => {
             <Switch>
               <Route exact path="/" component={Home} />
               <PrivateRoute path="/admin" component={Admin} />
+              <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
             </Switch>
