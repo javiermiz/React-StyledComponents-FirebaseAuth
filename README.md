@@ -53,8 +53,6 @@ Also, you need to be familiar with [HTML][html], [CSS][css], [JavaScript][js] ([
   them via [Brew][brew]_)
 - [VS Code][vc] editor (preferred) + [Project Snippets][vcsnippets], [EditorConfig][vceditconfig],
   [ESLint][vceslint], [Prettier][vcprettier], and [Babel JavaScript][vcjs] plug-ins
-- [Watchman][watchman] file watcher used by Relay Modern
-- [PostgreSQL][postgres] v9.6 or newer, only if you're planning to use a local db for development
 
 ### Getting Started
 
