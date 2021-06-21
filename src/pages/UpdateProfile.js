@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import { Form } from "../components/atoms/Form"
@@ -6,17 +6,21 @@ import { Label } from "../components/atoms/Label"
 import { Input } from "../components/atoms/Input"
 
 const UpdateProfile = () => {
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const passwordConfirmRef = useRef()
   const { currentUser, updatePassword, updateEmail } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
+  const [formValues, setFormValues] = useState({
+    email: currentUser.email,
+    password: "",
+    passwordConfirm: "",
+  })
+
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    
+    if (formValues.password !== formValues.passwordConfirm) {
       return setError("Passwords do not match")
     }
 
@@ -24,16 +28,16 @@ const UpdateProfile = () => {
     setLoading(true)
     setError("")
 
-    if (emailRef.current.value !== currentUser.email) {
-      promises.push(updateEmail(emailRef.current.value))
+    if (formValues.email !== currentUser.email) {
+      promises.push(updateEmail(formValues.email))
     }
-    if (passwordRef.current.value) {
-      promises.push(updatePassword(passwordRef.current.value))
+    if (formValues.password) {
+      promises.push(updatePassword(formValues.password))
     }
 
     Promise.all(promises)
       .then(() => {
-        history.push("/")
+        history.push("/admin")
       })
       .catch(() => {
         setError("Failed to update account")
@@ -43,30 +47,39 @@ const UpdateProfile = () => {
       })
   }
 
+  const handleInputChange = (event) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    setFormValues({ ...formValues, [name]: value })
+  }
+
   return (
     <>
       <h2>Update Profile</h2>
       <Form onSubmit={handleSubmit}>
         <Label>Email</Label>
         <Input
+          name="email"
           type="email"
-          ref={emailRef}
           required
-          defaultValue={currentUser.email}
+          defaultValue={formValues.email}
+          onChange={handleInputChange}
         />
-        <Form id="password">
-          <Label>Password</Label>
-          <Input
-            type="password"
-            ref={passwordRef}
-            placeholder="Leave blank to keep the same"
-          />
-        </Form>
+        <Label>Password</Label>
+        <Input
+          name="password"
+          type="password"
+          placeholder="Leave blank to keep the same"
+          onChange={handleInputChange}
+        />
         <Label>Password Confirmation</Label>
         <Input
+          name="passwordConfirm"
           type="password"
-          ref={passwordConfirmRef}
           placeholder="Leave blank to keep the same"
+          onChange={handleInputChange}
         />
         <button disabled={loading} type="submit">
           Update

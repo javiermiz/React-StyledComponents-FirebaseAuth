@@ -15,7 +15,6 @@ const is = {
   DESKTOP_LARGE: "@media only screen and (min-width: 1440px)",
 }
 
-
 export {
   Colors,
   Fonts,
